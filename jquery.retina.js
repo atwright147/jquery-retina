@@ -9,19 +9,29 @@
 */
 (function($){
 
-	$.fn.pluginName = function(options) {  
+	$.fn.retina = function(options) {  
 
 		// Create some defaults, extending them with any options that were provided
 		var settings = $.extend({
-			'option1'	: 'something',
-			'option2'	: 'something'
+			'suffix'	: '@2x'
 		}, options);
 
 		var o = settings;
 		//console.debug(settings);
 
 		return this.each(function() {
-			// plugin code here
+			$this = $(this);
+
+			switch($this[0].tagName) {
+				case 'IMG':
+					console.log('IMG',$this.attr('src'));
+					break;
+
+				default:
+					console.log('OTHER',$this.css('background-image'));
+					break;
+
+			}
 		});
 	};
 
