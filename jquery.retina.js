@@ -1,6 +1,6 @@
 /*!
 * jQuery Plugin v0.1
-* https://github.com/atwright147/jquery.retina
+* https://github.com/atwright147/jquery-retina
 *
 * Copyright 2012, Andy Wright
 * Dual licensed under the MIT or GPL Version 2 licenses.
@@ -13,26 +13,36 @@
 
 		// Create some defaults, extending them with any options that were provided
 		var settings = $.extend({
-			'suffix'	: '@2x'
+			'suffix': '@2x',
+			'test':   'false'
 		}, options);
 
 		var o = settings;
 		//console.debug(settings);
 
-		return this.each(function() {
-			$this = $(this);
+		if(window.devicePixelRatio >= 2 || o.test) {
+			return this.each(function() {
+				var $this = $(this);
+				var width  = $this.width();
+				var height = $this.height();
 
-			switch($this[0].tagName) {
-				case 'IMG':
-					console.log('IMG',$this.attr('src'));
-					break;
+				switch($this[0].tagName) {
+					case 'IMG':
+						var $image = $this.attr('src');
+						var $retina = $image.split('.').join('@2x.');
+						$this.attr('src', $retina).css('width',width).css('height',height);
+						break;
 
-				default:
-					console.log('OTHER',$this.css('background-image'));
-					break;
+					default:
+						var $image = $this.css('background-image');
+						var $retina = $image.split('.').join('@2x.');
+						$this.css('background-image', $retina).css('background-size','100%');
+						break;
 
-			}
-		});
+				}
+				console.log($retina);
+			});
+		}
 	};
 
 })(jQuery);
