@@ -14,7 +14,7 @@
 		// Create some defaults, extending them with any options that were provided
 		var settings = $.extend({
 			'suffix': '@2x',
-			'test':   'false'
+			'test':   false
 		}, options);
 
 		var o = settings;
