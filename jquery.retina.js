@@ -29,18 +29,19 @@
 				switch($this[0].tagName) {
 					case 'IMG':
 						var $image = $this.attr('src');
+						var ext = $image.substr(($image.lastIndexOf('.')+1));
 						var $retina = $image.split('.').join('@2x.');
 						$this.attr('src', $retina).css('width',width).css('height',height);
 						break;
 
 					default:
 						var $image = $this.css('background-image');
+						var ext = $image.substr(($image.lastIndexOf('.')+1)).replace('")','').replace("')",'');
 						var $retina = $image.split('.').join('@2x.');
 						$this.css('background-image', $retina).css('background-size','100%');
 						break;
-
 				}
-				console.log($retina);
+				//console.log($retina);
 			});
 		}
 	};
