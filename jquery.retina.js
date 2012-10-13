@@ -29,15 +29,21 @@
 				switch($this[0].tagName) {
 					case 'IMG':
 						var $image = $this.attr('src');
-						var ext = $image.substr(($image.lastIndexOf('.')+1));
-						var $retina = $image.split('.').join('@2x.');
+						var ext = $image.substr(($image.lastIndexOf('.') + 1));
+						var $retina = $image.split('.').join(o.suffix + '.');
 						$this.attr('src', $retina).css('width',width).css('height',height);
 						break;
 
 					default:
-						var $image = $this.css('background-image');
-						var ext = $image.substr(($image.lastIndexOf('.')+1)).replace('")','').replace("')",'');
-						var $retina = $image.split('.').join('@2x.');
+						var $image = $this.css('background-image').replace(/url\((['"])(.*?)\1\)/gi, '$2').split(',')[0]; // from: http://stackoverflow.com/a/3098455/633056
+						var ext = $image.substr(($image.lastIndexOf('.') + 1)); //.replace('")','').replace("')",'');
+						var $retina = $image.replace('.' + ext, o.suffix + '.' + ext);
+
+						console.info('filename:',$image);
+						console.info('ext:',ext);
+						console.info('retina:',$retina)
+						console.info('css:',$this.css('background-size'));
+
 						$this.css('background-image', $retina).css('background-size','100%');
 						break;
 				}
