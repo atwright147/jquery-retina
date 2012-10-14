@@ -30,7 +30,7 @@
 					case 'IMG':
 						var $image = $this.attr('src');
 						var ext = $image.substr(($image.lastIndexOf('.') + 1));
-						var $retina = $image.split('.').join(o.suffix + '.');
+						var $retina = $image.replace('.' + ext, o.suffix + '.' + ext);
 						$this.attr('src', $retina).css('width',width).css('height',height);
 						break;
 
@@ -43,8 +43,10 @@
 						console.info('ext:',ext);
 						console.info('retina:',$retina)
 						console.info('css:',$this.css('background-size'));
+						console.info('this:',$this);
+						console.log($.support.BackgroundSize);
 
-						$this.css('background-image', $retina).css('background-size','100%');
+						$this.css('background-image', 'url("' + $retina + '")').css('background-size','100%');
 						break;
 				}
 				//console.log($retina);
