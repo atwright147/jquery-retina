@@ -39,14 +39,22 @@
 						var ext = $image.substr(($image.lastIndexOf('.') + 1)); //.replace('")','').replace("')",'');
 						var $retina = $image.replace('.' + ext, o.suffix + '.' + ext);
 
+						console.group('image');
 						console.info('filename:',$image);
 						console.info('ext:',ext);
 						console.info('retina:',$retina)
 						console.info('css:',$this.css('background-size'));
 						console.info('this:',$this);
-						console.log($.support.BackgroundSize);
+						console.info('support:',$.support.BackgroundSize);
+						console.groupEnd()
 
-						$this.css('background-image', 'url("' + $retina + '")').css('background-size','100%');
+						$this.css('background-image', 'url("' + $retina + '")');
+						if($this.css('background-size') == 'auto' || $this.css('background-size') == 'auto auto') {
+							console.log('auto:','auto');
+							$this.css('background-size', '100%');
+						} else {
+							console.log('auto:','not auto');
+						}
 						break;
 				}
 				//console.log($retina);
