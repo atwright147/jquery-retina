@@ -31,23 +31,15 @@
 						var $image = $this.attr('src');
 						var ext = $image.substr(($image.lastIndexOf('.') + 1));
 						var $retina = $image.replace('.' + ext, o.suffix + '.' + ext);
-						$this.attr('src', $retina).css('width',width).css('height',height);
+						$this.error(function() {
+							$this.attr('src', $image);
+						}).attr('src', $retina).css('width',width).css('height',height);
 						break;
 
 					default:
 						var $image = $this.css('background-image').replace(/url\((['"])(.*?)\1\)/gi, '$2').split(',')[0]; // from: http://stackoverflow.com/a/3098455/633056
 						var ext = $image.substr(($image.lastIndexOf('.') + 1)); //.replace('")','').replace("')",'');
 						var $retina = $image.replace('.' + ext, o.suffix + '.' + ext);
-
-						console.group('image');
-						console.info('filename:',$image);
-						console.info('ext:',ext);
-						console.info('retina:',$retina)
-						console.info('css:',$this.css('background-size'));
-						console.info('this:',$this);
-						console.info('support:',$.support.BackgroundSize);
-						console.groupEnd()
-
 						$this.css('background-image', 'url("' + $retina + '")');
 						if($this.css('background-size') == 'auto' || $this.css('background-size') == 'auto auto') {
 							console.log('auto:','auto');
