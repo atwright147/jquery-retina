@@ -14,6 +14,7 @@
 		// Create some defaults, extending them with any options that were provided
 		var settings = $.extend({
 			'suffix': '@2x',
+			'check':  true
 			'test':   false
 		}, options);
 
@@ -40,7 +41,23 @@
 						var $image = $this.css('background-image').replace(/url\((['"])(.*?)\1\)/gi, '$2').split(',')[0]; // from: http://stackoverflow.com/a/3098455/633056
 						var ext = $image.substr(($image.lastIndexOf('.') + 1)); //.replace('")','').replace("')",'');
 						var $retina = $image.replace('.' + ext, o.suffix + '.' + ext);
-						$this.css('background-image', 'url("' + $retina + '")');
+						var img = $image;
+						
+						if(check) {
+							$.ajax({
+								url:  $retina,
+								type: 'HEAD',
+								async: true,
+								success:
+									function() {
+										img = $retina;
+									}
+							});
+						} else {
+							img = $retina;
+						}
+
+						$this.css('background-image', 'url("' + img + '")');
 						if($this.css('background-size') == 'auto' || $this.css('background-size') == 'auto auto') {
 							console.log('auto:','auto');
 							$this.css('background-size', '100%');
@@ -48,8 +65,8 @@
 							console.log('auto:','not auto');
 						}
 						break;
+
 				}
-				//console.log($retina);
 			});
 		}
 	};
