@@ -14,7 +14,7 @@
 		// Create some defaults, extending them with any options that were provided
 		var settings = $.extend({
 			'suffix': '@2x',
-			'check':  true
+			'check':  true,
 			'test':   false
 		}, options);
 
@@ -43,7 +43,7 @@
 						var $retina = $image.replace('.' + ext, o.suffix + '.' + ext);
 						var img = $image;
 						
-						if(check) {
+						if(o.check) {
 							$.ajax({
 								url:  $retina,
 								type: 'HEAD',
